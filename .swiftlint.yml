@@ -1,0 +1,11 @@
+disabled_rules:
+ - trailing_whitespace
+ - type_name
+ 
+identifier_name:
+  min_length:
+    warning: 2
+  
+excluded: # paths to ignore during linting.
+  - Carthage
+  - Pods
