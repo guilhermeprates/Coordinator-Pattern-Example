@@ -10,8 +10,7 @@ import UIKit
 
 extension UITableViewCell {
 
-  @objc
-  class func height() -> CGFloat {
+  @objc class func height() -> CGFloat {
     return 44.0
   }
 

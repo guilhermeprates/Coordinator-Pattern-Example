@@ -18,14 +18,15 @@ final class MoviesService {
 
   // MARK: - Properties
 
-  private let APIEndPoint: String = baseURL+"/films"
+  private let api: GhibiliAPI
   
-  private var networkClient: NetworkClient
+  private let networkClient: NetworkClient
 
   // MARK: - Life cycle
 
   init() {
     networkClient = NetworkClient()
+    api = GhibiliAPI()
   }
 
 }
@@ -34,15 +35,11 @@ final class MoviesService {
 extension MoviesService: MoviesServiceDelegate {
 
   func fetchMovies(_ completion: @escaping FetchMoviesCompletion) {
-    guard let url = URL(string: APIEndPoint) else {
-      completion([], "This is not a valid URL.")
-      return
-    }
-
-    networkClient.request(url, output: Movies.self) { movies, error in
-      if let movies = movies {
+    networkClient.request(api.moviesRequest, output: Movies.self) { result in
+      switch result {
+      case .success(let movies):
         completion(movies, nil)
-      } else if let error = error {
+      case .failure(let error):
         completion([], error.localizedDescription)
       }
     }

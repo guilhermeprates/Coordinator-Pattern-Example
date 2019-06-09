@@ -12,7 +12,22 @@ class MovieDetaiViewController: UIViewController {
 
   // MARK: - Properties
 
-  var movie: Movie?
+  private let titles: [String] = [
+    "Description",
+    "Director",
+    "Producer",
+    "Release Date",
+    "Score"
+  ]
+
+  private var data: [String] = []
+
+  var movie: Movie? {
+    didSet {
+      guard let movie = self.movie else { return }
+      title = movie.title
+    }
+  }
 
   // MARK: - IBOutlets
 
@@ -20,6 +35,10 @@ class MovieDetaiViewController: UIViewController {
     didSet {
       movieDetailTableView.delegate = self
       movieDetailTableView.dataSource = self
+      movieDetailTableView.register(MovieDetailTableViewCell.loadNib(),
+                                    forCellReuseIdentifier: MovieDetailTableViewCell.identifier)
+      movieDetailTableView.tableFooterView = UIView()
+      movieDetailTableView.separatorInset = UIEdgeInsets.zero
     }
   }
 
@@ -29,14 +48,14 @@ class MovieDetaiViewController: UIViewController {
     super.viewDidLoad()
   }
 
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(animated)
-  }
-
 }
 
 // MARK: - UITableViewDelegate
 extension MovieDetaiViewController: UITableViewDelegate {
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return MovieDetailTableViewCell.height()
+  }
 
 }
 
@@ -44,11 +63,12 @@ extension MovieDetaiViewController: UITableViewDelegate {
 extension MovieDetaiViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 0
+    return data.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return UITableViewCell()
+    let cell = tableView.dequeueReusableCell(withIdentifier: MovieDetailTableViewCell.identifier, for: indexPath)
+    return cell
   }
   
 }

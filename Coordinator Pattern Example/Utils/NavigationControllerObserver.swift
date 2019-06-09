@@ -1,7 +1,7 @@
 //
 // Navigation Controller Observer
-// https://en.fabernovel.com/engineering/coordinators-and-back-button
-//
+// Article: https://en.fabernovel.com/engineering/coordinators-and-back-button
+// Source: https://gist.github.com/felginep/370131d12a5ced76accd109e731e6d76
 //
 
 import UIKit

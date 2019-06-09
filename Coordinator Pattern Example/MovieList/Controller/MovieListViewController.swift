@@ -37,6 +37,7 @@ class MovieListViewController: UIViewController {
       movieListTableView.register(nib: MovieTableViewCell.loadNib(),
                                   withCellClass: MovieTableViewCell.self)
       movieListTableView.refreshControl = refreshControl
+      movieListTableView.tableFooterView = UIView()
     }
   }
 
@@ -51,9 +52,9 @@ class MovieListViewController: UIViewController {
 
   private func fetchMoviesData() {
     moviesService?.fetchMovies { [weak self] movies, error in
-      guard error == nil else { return }
-      self?.movies = movies
       DispatchQueue.main.async {
+        guard error == nil else { return }
+        self?.movies = movies
         self?.movieListTableView.reloadData()
         self?.refreshControl.endRefreshing()
       }

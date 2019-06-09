@@ -34,6 +34,7 @@ final class MovieDetailCoordinator: Coordinator {
     let viewController = MovieDetaiViewController.instantiateViewController()
     viewController.movie = movie
     navigationController.pushViewController(viewController, animated: true)
+    navigationController.navigationBar.tintColor = UIColor.black
     navigationControllerObserver.observePopTransition(of: viewController, delegate: self)
   }
   
